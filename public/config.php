@@ -1,4 +1,7 @@
 <?php
+date_default_timezone_set('Europe/Bucharest');
+session_start();
+
 $host = 'db';
 $db   = 'appdb';
 $user = 'appuser';
@@ -10,5 +13,9 @@ try {
 } catch (PDOException $e) {
     die("Eroare conexiune: " . $e->getMessage());
 }
-session_start();
-?>
+
+function redirect($url)
+{
+    header("Location: $url");
+    exit();
+}

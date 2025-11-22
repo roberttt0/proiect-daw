@@ -1,28 +1,47 @@
-<?php require 'db.php'; ?>
 <!DOCTYPE html>
 <html>
-<head><title>Înregistrare</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"></head>
-<body class="container mt-5">
-    <h2>Înregistrare</h2>
-    <?php
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $nume = $_POST['nume'];
-        $email = $_POST['email'];
-        $pass = password_hash($_POST['parola'], PASSWORD_DEFAULT);
+<head><title>Register</title><link rel="stylesheet" href="./resources/css/style.css"></head>
+<body>
+    <header>
+        <div class="container">
+            <div id="branding"><h1>Biblioteca</h1></div>
+            <nav><ul><li><a href="index.php">inapoi la Site</a></li></ul></nav>
+        </div>
+    </header>
 
-        $stmt = $pdo->prepare("INSERT INTO Utilizator (nume, email, parola) VALUES (?, ?, ?)");
-        if ($stmt->execute([$nume, $email, $pass])) {
-            echo "<div class='alert alert-success'>Cont creat! <a href='login.php'>Autentifică-te</a></div>";
-        } else {
-            echo "<div class='alert alert-danger'>Eroare!</div>";
-        }
-    }
-    ?>
-    <form method="POST">
-        <input type="text" name="nume" placeholder="Nume complet" class="form-control mb-2" required>
-        <input type="email" name="email" placeholder="Email" class="form-control mb-2" required>
-        <input type="password" name="parola" placeholder="Parola" class="form-control mb-2" required>
-        <button type="submit" class="btn btn-primary">Creează cont</button>
-    </form>
+    <div class="container auth-wrapper">
+        <div class="auth-box">
+            <h2>Creeaza cont nou</h2>
+            <form action="action.php" method="POST">
+                <input type="hidden" name="action" value="register">
+                
+                <div class="form-group">
+                    <label>Nume</label>
+                    <input type="text" name="nume" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Prenume</label>
+                    <input type="text" name="prenume" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Parola</label>
+                    <input type="password" name="parola" required>
+                </div>
+
+                <button type="submit" class="btn btn-block">Inregistreaza-te</button>
+            </form>
+            
+            <div class="auth-footer">
+                Ai deja cont? <a href="login.php">Logheaza-te</a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
