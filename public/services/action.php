@@ -1,10 +1,13 @@
 <?php
 require 'config.php';
+require '../env.php';
 
 $action = $_REQUEST['action'] ?? '';
 
-if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
-    die("Eroare de securitate (CSRF)!");
+$token_primit = $_POST['csrf_token'] ?? $_GET['csrf_token'] ?? '';
+
+if (empty($token_primit) || $token_primit !== $_SESSION['csrf_token']) {
+    die("Eroare de securitate (CSRF)! Token invalid sau expirat.");
 }
 
 if ($action == 'register') {
@@ -37,7 +40,6 @@ if ($action == 'register') {
         exit();
     }
 
-    $secret_key = '6LcskzAsAAAAAG6P-Drq23QnIiCpcMzSvdJLPN6o';
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
     curl_setopt($ch, CURLOPT_POST, true);
@@ -114,7 +116,6 @@ if ($action == 'login') {
         exit();
     }
 
-    $secret_key = '6LcskzAsAAAAAG6P-Drq23QnIiCpcMzSvdJLPN6o';
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
     curl_setopt($ch, CURLOPT_POST, true);
@@ -157,7 +158,6 @@ if ($action == 'login') {
 
 if ($action == 'logout') {
     session_destroy();
-    // redirect('../index.php');
     header("Location: ../login.php");
     exit();
 }
@@ -235,6 +235,8 @@ if ($action == 'update_profile') {
     ";
     
     $pdo->prepare($stmt)->execute([$lastName, $firstName, $user_id]);
+
+    $_SESSION['confirm'] = 'Datele contului tau au fost actualizate cu succes!';
     header("Location: ../profile.php");
     exit();
 

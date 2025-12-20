@@ -21,7 +21,7 @@ function set_active($page_name) {
                     <?php if ($_SESSION['role'] === 'admin'): ?>
                         <li><a href="admin.php" class=<?= set_active('admin.php') ?>>Administrare</a></li>
                     <?php endif; ?>
-                    <li><a href="./services/action.php?action=logout">Logout (<?= $_SESSION['email'] ?>)</a></li>
+                    <li><a href="./services/action.php?action=logout&csrf_token=<?= $_SESSION['csrf_token'] ?>">Logout (<?= $_SESSION['email'] ?>)</a></li>
                 <?php else: ?>
                     <li><a href="login.php">Autentificare</a></li>
                 <?php endif; ?>

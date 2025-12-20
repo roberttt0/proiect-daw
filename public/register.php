@@ -60,7 +60,7 @@ require './services/config.php';
             <br>
             <!-- div to show reCAPTCHA -->
             <div class="g-recaptcha"
-                 data-sitekey="6LcskzAsAAAAAHyiPRufn6UmVsp86TIg12vXYmcK">
+                 data-sitekey="6Ld5mjEsAAAAAF5TA5JkePOWVEsSaq7JBJz6QH8z">
             </div>
             <br>
 
