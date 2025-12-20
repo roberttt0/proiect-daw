@@ -9,7 +9,12 @@ body {
     padding: 0;
     background-color: #f0f2f5;
     color: #333;
+    display: flex;
+    flex-direction: column;
 }
+
+
+/* header */
 
 header {
     background: #35424a;
@@ -24,6 +29,24 @@ header ul { margin: 0; padding: 0; list-style: none; text-align: right; }
 header li { display: inline; margin-left: 20px; }
 header #branding { float: left; }
 header #branding h1 { margin: 0; font-size: 24px; }
+
+.active {
+    color: #e8491d;
+}
+
+/* end header */
+
+/* footer */
+
+footer {
+    background: #35424a;
+    color: #ffffff;
+    padding: 15px 0;
+    border-top: #e8491d 3px solid;
+    margin-top: 30px;
+}
+
+/* end footer */
 
 .container {
     width: 80%;
@@ -130,3 +153,20 @@ th, td { padding: 15px; border-bottom: 1px solid #eee; text-align: left; }
     color: #666;
 }
 .auth-footer a { color: #e8491d; font-weight: bold; text-decoration: none; }
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    width: 100%;
+    max-width: 100%;
+    padding: 10px 40px 10px 12px;
+    font-size: 16px;
+    line-height: 1.5;
+    font-family: inherit;    
+    color: #333;
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}

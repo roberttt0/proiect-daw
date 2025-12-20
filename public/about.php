@@ -1,3 +1,9 @@
+<?php
+
+require './services/config.php';
+
+?>
+
 <!DOCTYPE html>
 <html lang="ro">
 <head>
@@ -7,12 +13,11 @@
     <link rel="stylesheet" href="/resources/css/about.css">
 </head>
 <body>
-    <header>
-        <h1>Proiect DAW</h1>
-        <h2>Biblioteca</h2>
-        <a href="index.php" style="color:#E8491D">Inapoi acasa</a>
-    </header>
-
+    <?php 
+        require './components/header.php';
+    ?>
+    <h1 style="text-align: center;">Proiect DAW</h1>
+    <h2 style="text-align: center;">Biblioteca</h2>
     <main>
         <section id="descriere">
             <h3>Descrierea proiectului</h3>
@@ -153,9 +158,8 @@
         </section>
     </main>
 
-    <footer>
-        <p>&copy; 2025 - Proiect DAW - Biblioteca</p>
-        <p class="author">Realizat de <strong>Antohi Robert</strong></p>
-    </footer>
+    <?php 
+        require './components/footer.php';
+    ?>
 </body>
 </html>

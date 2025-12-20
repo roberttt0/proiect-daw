@@ -2,6 +2,10 @@
 date_default_timezone_set('Europe/Bucharest');
 session_start();
 
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 $host = 'db';
 $db   = 'appdb';
 $user = 'appuser';

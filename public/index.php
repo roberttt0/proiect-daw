@@ -1,4 +1,4 @@
-<?php require 'config.php'; ?>
+<?php require './services/config.php'; ?>
 <!DOCTYPE html>
 <html>
 
@@ -8,25 +8,9 @@
 </head>
 
 <body>
-    <header>
-        <div class="container">
-            <div id="branding">
-                <h1>Biblioteca</h1>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="index.php">Acasa</a></li>
-                    <li><a href="about.php">Despre</a></li>
-                    <?php if (isset($_SESSION['user_id'])): ?>
-                        <li><a href="profile.php">Profilul Meu</a></li>
-                        <li><a href="action.php?action=logout">Logout (<?= $_SESSION['nume'] ?>)</a></li>
-                    <?php else: ?>
-                        <li><a href="login.php">Autentificare</a></li>
-                    <?php endif; ?>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <?php 
+        require './components/header.php';
+    ?>
 
     <div class="container">
         <h2>Carti Disponibile</h2>
@@ -42,6 +26,10 @@
             </div>
         <?php endwhile; ?>
     </div>
+
+    <?php 
+        require './components/footer.php';
+    ?>
 </body>
 
 </html>
