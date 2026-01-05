@@ -16,6 +16,7 @@ function set_active($page_name) {
             <ul>
                 <li><a href="index.php" class=<?= set_active('index.php') ?>>Acasa</a></li>
                 <li><a href="about.php" class=<?= set_active('about.php') ?>>Despre</a></li>
+                <li><a href="top.php" class=<?= set_active('top.php') ?>>Top Carti</a></li>
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <li><a href="profile.php" class=<?= set_active('profile.php') ?>>Profilul Meu</a></li>
                     <?php if ($_SESSION['role'] === 'admin'): ?>

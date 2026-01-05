@@ -8,11 +8,15 @@
 </head>
 
 <body>
-    <?php 
-        require './components/header.php';
+    <?php
+    require './components/header.php';
     ?>
 
     <div class="container">
+
+        <h2>Statistica Bibliotecii</h2>
+        <img src="./grafic.php" alt="Grafic Statistica">
+
         <h2>Carti Disponibile</h2>
         <?php
         $stmt = $pdo->query("SELECT c.*, a.nume as autor_nume FROM Carte c JOIN Autor a ON c.id_autor = a.id_autor");
@@ -27,8 +31,8 @@
         <?php endwhile; ?>
     </div>
 
-    <?php 
-        require './components/footer.php';
+    <?php
+    require './components/footer.php';
     ?>
 </body>
 

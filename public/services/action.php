@@ -1,4 +1,13 @@
 <?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+
+require __DIR__ . '/../libs/PHPMailer/Exception.php';
+require __DIR__ . '/../libs/PHPMailer/PHPMailer.php';
+require __DIR__ . '/../libs/PHPMailer/SMTP.php';
+
 require 'config.php';
 require '../env.php';
 
@@ -77,11 +86,71 @@ if ($action == 'register') {
         $_SESSION['email'] = $email;
         $_SESSION['role'] = 'user';
 
+        $mail = new PHPMailer(true);
+
+        try {
+            $mail->isSMTP();
+            $mail->Host       = $smtp_host;
+            $mail->SMTPAuth   = true;
+            $mail->Username   = $smtp_user;
+            $mail->Password   = $smtp_pass;
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+            $mail->Port       = $smtp_port;
+
+            $mail->setFrom($smtp_user, 'Biblioteca Online');
+            $mail->addAddress($email);
+
+            $nume_complet = $nume . " " . $prenume;
+            $site_url = "https://rantohi.daw.ssmr.ro";
+
+            $html_body = "
+<div style='background-color: #f4f7f6; padding: 30px; font-family: Arial, sans-serif;'>
+    <div style='max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05);'>
+        
+        <div style='background-color: #2c3e50; padding: 25px; text-align: center;'>
+            <h1 style='color: #ffffff; margin: 0; font-size: 22px; text-transform: uppercase; letter-spacing: 1px;'>Biblioteca Online</h1>
+        </div>
+
+        <div style='padding: 30px; color: #333333; line-height: 1.6;'>
+            <h2 style='color: #2c3e50; margin-top: 0;'>Salut, $nume_complet!</h2>
+            <p>Contul tau a fost creat cu succes pe platforma <strong>rantohi.daw.ssmr.ro</strong>.</p>
+            
+            <p>Acum ai acces la intregul nostru catalog de carti. Poti sa iti gestionezi imprumuturile, sa vizualizezi recenziile si sa vezi topul cartilor din aceasta saptamana.</p>
+
+            <div style='text-align: center; margin: 35px 0;'>
+                <a href='$site_url' 
+                   style='background-color: #3498db; color: #ffffff; padding: 15px 30px; text-decoration: none; border-radius: 6px; font-weight: bold; display: inline-block; box-shadow: 0 2px 5px rgba(0,0,0,0.1);'>
+                   Intra in contul tau
+                </a>
+            </div>
+
+            <p style='font-size: 14px; color: #7f8c8d; border-top: 1px solid #eee; padding-top: 20px;'>
+                Daca nu ai solicitat crearea acestui cont, te rugam sa ignori acest mesaj.
+            </p>
+        </div>
+
+        <div style='background-color: #f9f9f9; padding: 20px; text-align: center;'>
+            <p style='font-size: 11px; color: #bdc3c7; margin: 0;'>
+                © " . date('Y') . " rantohi.daw.ssmr.ro. Acest email a fost generat automat.
+            </p>
+        </div>
+    </div>
+</div>
+";
+
+            $mail->isHTML(true);
+            $mail->Subject = 'Confirmare Creare Cont';
+            $mail->Body    = $html_body;
+
+            $mail->send();
+        } catch (Exception $e) {
+            header("Location: ../index.php");
+        }
+
         header("Location: ../index.php");
         exit();
-
     } catch (PDOException $e) {
-        $_SESSION['error'] = "A aparut o eroare neașteptată la baza de date.";
+        $_SESSION['error'] = "A aparut o eroare neasteptată la baza de date.";
         header("Location: ../register.php");
         exit();
     }
@@ -167,7 +236,7 @@ if (!isset($_SESSION['user_id'])) redirect('../login.php');
 if ($action == 'imprumuta') {
     $id_carte = $_POST['id_carte'];
     $id_user = $_SESSION['user_id'];
-    
+
     $check = $pdo->prepare("SELECT COUNT(*) FROM Imprumut WHERE id_utilizator = ? AND id_carte = ? AND data_retur IS NULL");
     $check->execute([$id_user, $id_carte]);
     if ($check->fetchColumn() > 0) {
@@ -233,11 +302,10 @@ if ($action == 'update_profile') {
     SET nume = ? , prenume = ?
     WHERE id_utilizator = ?
     ";
-    
+
     $pdo->prepare($stmt)->execute([$lastName, $firstName, $user_id]);
 
     $_SESSION['confirm'] = 'Datele contului tau au fost actualizate cu succes!';
     header("Location: ../profile.php");
     exit();
-
 }

@@ -1,8 +1,13 @@
 FROM php:8.2-fpm
 
-# Install common extensions (pdo, pdo_mysql)
-RUN apt-get update && apt-get install -y bash
-RUN docker-php-ext-install pdo pdo_mysql
+RUN apt-get update && apt-get install -y \
+    libpng-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
+    bash
+
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd pdo pdo_mysql
 
 WORKDIR /var/www
 

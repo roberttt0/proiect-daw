@@ -48,7 +48,7 @@ require './services/config.php';
 
                 <div class="form-group">
                     <label>Parola</label>
-                    <input type="password" name="parola" placeholder="••••••••" required>
+                    <input type="password" name="parola" placeholder="" required>
                 </div>
 
                 <br>

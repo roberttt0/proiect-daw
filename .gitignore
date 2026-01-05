@@ -1,1 +1,4 @@
 .idea
+
+/public/cache_top_books.json
+/public/env.php

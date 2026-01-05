@@ -53,6 +53,14 @@ $carti = $pdo->query("SELECT c.*, a.nume as autor, e.nume as editura
         <h1>Panou Administrare - Gestionare Carti</h1>
         <hr style="margin: 40px 0px">
 
+        <div style="margin: 20px 0;">
+            <h3>Doresti o evidenta a imprumuturilor recente?</p>
+            <a href="./generare_raport.php"
+                style="background-color: #28a745; color: white; padding: 10px 15px; text-decoration: none; border-radius: 5px; font-size: 14px; display: inline-block;">
+                Descarca raportul (Ultima luna)
+            </a>
+        </div>
+
         <h3>Adauga o carte noua</h3>
         <form action="./services/admin_actions.php" method="POST" style="display: flex; gap: 20px;">
             <input type="hidden" name="action" value="adauga">
